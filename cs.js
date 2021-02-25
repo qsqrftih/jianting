@@ -1,5 +1,5 @@
 ﻿const internalUrls = {},
-	manifest = chrome.runtime.getManifest(),
+	manifest = chrome.runtime.getManifest()
 	contentScript = (async() => {
 		const e = () => "www.bilibili.com" === location.hostname || "bilibili.com" === location.hostname;
 		if (!e()) return;
