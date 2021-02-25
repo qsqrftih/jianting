@@ -1,12 +1,12 @@
-(function () {
+ï»¿(function () {
 
   let _sourceBufferList = []
   let $btnDownload = document.createElement('div')
   let $downloadNum = document.createElement('div')
-  let $tenRate = document.createElement('div') // Ê®±¶ËÙ²¥·Å
-  let $oneRate = document.createElement('div') // Ò»±¶ËÙ²¥·Å
+  let $tenRate = document.createElement('div') // åå€é€Ÿæ’­æ”¾
+  let $oneRate = document.createElement('div') // ä¸€å€é€Ÿæ’­æ”¾
 
-  // Ê®±¶ËÙ²¥·Å
+  // åå€é€Ÿæ’­æ”¾
   function _tenRatePlay () {
     let $domList = document.getElementsByTagName('video')
     for (let i = 0, length = $domList.length; i < length; i++) {
@@ -14,7 +14,7 @@
       $dom.playbackRate = 10
     }
   }
-      // Ò»±¶ËÙ²¥·Å
+      // ä¸€å€é€Ÿæ’­æ”¾
   function _oneRatePlay () {
     let $domList = document.getElementsByTagName('video')
     for (let i = 0, length = $domList.length; i < length; i++) {
@@ -23,12 +23,12 @@
     }
   }
 
-  // ÏÂÔØ×ÊÔ´
+  // ä¸‹è½½èµ„æº
   function _download () {
     _sourceBufferList.forEach((target) => {
       const mime = target.mime.split(';')[0]
       const type = mime.split('/')[1]
-      const fileBlob = new Blob(target.bufferList, { type: mime }) // ´´½¨Ò»¸öBlob¶ÔÏó£¬²¢ÉèÖÃÎÄ¼şµÄ MIME ÀàĞÍ
+      const fileBlob = new Blob(target.bufferList, { type: mime }) // åˆ›å»ºä¸€ä¸ªBlobå¯¹è±¡ï¼Œå¹¶è®¾ç½®æ–‡ä»¶çš„ MIME ç±»å‹
       const a = document.createElement('a')
       a.download = `${document.title}.${type}`
       a.href = URL.createObjectURL(fileBlob)
@@ -39,15 +39,15 @@
     })
   }
 
-  // ¼àÌı×ÊÔ´È«²¿Â¼È¡³É¹¦
+  // ç›‘å¬èµ„æºå…¨éƒ¨å½•å–æˆåŠŸ
   let _endOfStream = window.MediaSource.prototype.endOfStream
   window.MediaSource.prototype.endOfStream = function () {
-    alert('×ÊÔ´È«²¿²¶»ñ³É¹¦£¬¼´½«ÏÂÔØ£¡')
+    alert('èµ„æºå…¨éƒ¨æ•è·æˆåŠŸï¼Œå³å°†ä¸‹è½½ï¼')
     _download()
     _endOfStream.call(this)
   }
 
-  // Â¼È¡×ÊÔ´
+  // å½•å–èµ„æº
   let _addSourceBuffer = window.MediaSource.prototype.addSourceBuffer
   window.MediaSource.prototype.addSourceBuffer = function (mime) {
     console.log(mime)
@@ -59,14 +59,14 @@
       bufferList,
     })
     sourceBuffer.appendBuffer = function (buffer) {
-      $downloadNum.innerHTML = `ÒÑ²¶»ñ ${_sourceBufferList[0].bufferList.length} ¸öÆ¬¶Î`
+      $downloadNum.innerHTML = `å·²æ•è· ${_sourceBufferList[0].bufferList.length} ä¸ªç‰‡æ®µ`
       bufferList.push(buffer)
       _append.call(this, buffer)
     }
     return sourceBuffer
   }
 
-  // Ìí¼Ó²Ù×÷µÄ dom
+  // æ·»åŠ æ“ä½œçš„ dom
   function _appendDom () {
     const baseStyle = `
       position: fixed;
@@ -85,10 +85,10 @@
       background-color: #3498db;
       box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
     `
-    $tenRate.innerHTML = 'Ê®±¶ËÙ²¶»ñ'
-    $oneRate.innerHTML = 'Ò»±¶ËÙ²¶»ñ'
-    $downloadNum.innerHTML = 'ÒÑ²¶»ñ 0 ¸öÆ¬¶Î'
-    $btnDownload.innerHTML = 'ÏÂÔØÒÑ²¶»ñÆ¬¶Î'
+    $tenRate.innerHTML = 'åå€é€Ÿæ•è·'
+    $oneRate.innerHTML = 'ä¸€å€é€Ÿæ•è·'
+    $downloadNum.innerHTML = 'å·²æ•è· 0 ä¸ªç‰‡æ®µ'
+    $btnDownload.innerHTML = 'ä¸‹è½½å·²æ•è·ç‰‡æ®µ'
     $tenRate.style = baseStyle + `top: 150px;`
     $oneRate.style = baseStyle + `top: 200px;`
     $btnDownload.style = baseStyle + `top: 100px;`
