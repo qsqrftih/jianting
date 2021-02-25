@@ -480,7 +480,7 @@
 (() => {
 	if (-1 !== window.location.href.indexOf("bilibili.com/s/video/")) return window.location.replace(window.location.href.replace("/s/", "/"));
 	const e = document.createElement("script"),
-		t = `async()=> {const internalUrls = ${JSON.stringify(internalUrls)};const manifest = ${JSON.stringify(manifest)};`,
+		t = `async()=> {const internalUrls = ${JSON.stringify(internalUrls)};`,
 		n = contentScript.replace("async () => {", t).replace("async()=>{", t);
 	e.textContent = `(${n})();`, document.head.appendChild(e)
 })();
